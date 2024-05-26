@@ -1,7 +1,6 @@
 # swipe
 
-A new Flutter project.
-
+Libya's first P2P payment app
 ## Getting Started
 
 This project is a starting point for a Flutter application.
