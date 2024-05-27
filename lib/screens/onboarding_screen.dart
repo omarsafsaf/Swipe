@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'splash_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -13,6 +13,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue, // Set the background color to blue
       body: Stack(
         children: [
           PageView(
@@ -46,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ],
           ),
           Positioned(
-            bottom: 20,
+            bottom: 30,
             left: 16,
             right: 16,
             child: Row(
@@ -60,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         curve: Curves.easeInOut,
                       );
                     },
-                    child: Text('Back'),
+                    child: Text('Back', style: TextStyle(color: Colors.white)),
                   ),
                 Row(
                   children: List.generate(4, (index) => _buildDot(index, context)),
@@ -73,17 +74,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         curve: Curves.easeInOut,
                       );
                     },
-                    child: Text('Next'),
+                    child: Text('Next', style: TextStyle(color: Colors.white)),
                   ),
                 if (_currentPage == 3)
-                  TextButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        MaterialPageRoute(builder: (context) => SplashScreen()),
                       );
                     },
                     child: Text('Done'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      onPrimary: Colors.blue,
+                      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      textStyle: TextStyle(fontSize: 16),
+                    ),
                   ),
               ],
             ),
@@ -101,9 +108,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           Image.asset(image, height: 300),
           SizedBox(height: 20),
-          Text(title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          Text(
+            title,
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white), // Change text color to white
+          ),
           SizedBox(height: 10),
-          Text(description, textAlign: TextAlign.center, style: TextStyle(fontSize: 16)),
+          Text(
+            description,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, color: Colors.white), // Change text color to white
+          ),
         ],
       ),
     );
@@ -112,11 +126,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildDot(int index, BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 4),
-      height: 8,
-      width: 8,
+      height: 10,
+      width: 10,
       decoration: BoxDecoration(
-        color: _currentPage == index ? Colors.blue : Colors.grey,
+        color: _currentPage == index ? Colors.white : Colors.grey, // Change selected dot color to white
         shape: BoxShape.circle,
+        border: Border.all(color: Colors.white), // Add a white border to dots
       ),
     );
   }

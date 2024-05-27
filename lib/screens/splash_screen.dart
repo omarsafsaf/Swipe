@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swipe/main.dart';
-import 'home_screen.dart'; // Ensure this import is correct
+import 'package:swipe/screens/onboarding_screen.dart';
+import 'package:swipe/screens/welcome_screen.dart';
+import '/main.dart'; // Ensure this import is correct for MainScreen
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,10 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToHome() async {
-    await Future.delayed(Duration(seconds: 3), () {});
+    await Future.delayed(Duration(seconds: 2), () {});
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => MainScreen()),
+      MaterialPageRoute(builder: (context) => WelcomeScreen()), // Ensure MainScreen is imported and defined
     );
   }
 

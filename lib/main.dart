@@ -1,73 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'gen_l10n/app_localizations.dart'; // Ensure this import is correct
+import 'screens/welcome_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/payments_screen.dart';
 import 'screens/profile_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/splash_screen.dart'; // Import SplashScreen
 
 void main() {
   runApp(SwipeApp());
 }
 
-class SwipeApp extends StatelessWidget {
+class SwipeApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Swipe',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: OnboardingScreen(),
-    );
-  }
+  _SwipeAppState createState() => _SwipeAppState();
+
+  static _SwipeAppState? of(BuildContext context) => context.findAncestorStateOfType<_SwipeAppState>();
 }
 
-class MainScreen extends StatefulWidget {
-  @override
-  _MainScreenState createState() => _MainScreenState();
-}
+class _SwipeAppState extends State<SwipeApp> {
+  Locale _locale = Locale('en', '');
 
-class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
-
-  static List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    PaymentsScreen(),
-    ProfileScreen(),
-  ];
-
-  void _onItemTapped(int index) {
+  void setLocale(Locale locale) {
     setState(() {
-      _selectedIndex = index;
+      _locale = locale;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Swipe'),
+    return MaterialApp(
+      title: 'Swipe',
+      locale: _locale,
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''), // English
+        const Locale('عر', ''), // Arabic
+        const Locale('fr', ''), // French
+      ],
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payment),
-            label: 'Payments',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
-      ),
+      home: SplashScreen(), // Start with the SplashScreen
     );
   }
 }
